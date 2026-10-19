@@ -1,0 +1,22 @@
+{
+  "providers": {
+    "local-llama": {
+      "baseUrl": "http://192.168.1.117:9931",
+      "api": "openai-completions",
+      "apiKey": "local-bypass",
+      "models": [
+        { 
+          "id": "qwen3.8-27b",
+          "input": ["text", "image"],
+          "capabilities": ["code", "chat", "image"],
+          "systemPrompt": "Ты — Senior Java-разработчик и QA-автоматизатор со зрением. ТЕБЕ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО писать любые англоязычные рассуждения, размышления или логические цепочки (блоки типа 'Hmm... let's see...'). Изучай присланные скриншоты ошибок Docker, панелей СУБД или кода. Отвечай СТРОГО на русском языке, сразу переходя к делу или выдаче готового Java-кода. Пиши современный production-ready код (Java 21: records, switch expressions, text blocks). Категорически ЗАПРЕЩЕНО использовать многоточия, заглушки и '// ... existing code ...' — перезаписывай код метода или класса целиком от первой до последней строчки. Зависимости внедряй через private final + Lombok @RequiredArgsConstructor. Автотесты пиши на JUnit 5, Selenide (POM) и REST Assured. Ассерты — Fluent API AssertJ (assertThat). Без лишней воды."
+        }
+      ]
+    },
+    "llama.cpp": {
+      "baseUrl": "http://192.168.1.117:9931",
+      "api": "openai-completions",
+      "apiKey": "local-bypass"
+    }
+  }
+}

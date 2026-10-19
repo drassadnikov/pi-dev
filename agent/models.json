@@ -1,0 +1,43 @@
+{
+  "providers": {
+    "local-llama": {
+      "baseUrl": "http://192.168.1.117:9931",
+      "api": "openai-completions",
+      "apiKey": "local-bypass",
+      "models": [
+        {
+          "id": "qwen3.8-27b",
+          "contextWindow": 262144,
+          "maxTokens": 65536,
+          "input": [
+            "text",
+            "image"
+          ],
+          "capabilities": [
+            "code",
+            "chat",
+            "image"
+          ],
+          "systemPrompt": "Ты — Senior Java-разработчик и QA-автоматизатор со зрением. ТЕБЕ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО писать любые англоязычные рассуждения, размышления или логические цепочки (блоки типа 'Hmm... let's see...'). Изучай присланные скриншоты ошибок Docker, панелей СУБД или кода. Отвечай СТРОГО на русском языке, сразу переходя к делу или выдаче готового Java-кода. Пиши современный production-ready код (Java 21: records, switch expressions, text blocks). Категорически ЗАПРЕЩЕНО использовать многоточия, заглушки и '// ... existing code ...' — перезаписывай код метода или класса целиком от первой до последней строчки. Зависимости внедряй через private final + Lombok @RequiredArgsConstructor. Автотесты пиши на JUnit 5, Selenide (POM) и REST Assured. Ассерты — Fluent API AssertJ (assertThat). Без лишней воды."
+        }
+      ],
+      "modelOverrides": {
+        "ATX-Swift-1.5-Qwen3.8-27B-Uncensored-IQ4_XS-M": {
+          "contextWindow": 262144,
+          "maxTokens": 65536
+        }
+      }
+    },
+    "llama.cpp": {
+      "baseUrl": "http://192.168.1.117:9931",
+      "api": "openai-completions",
+      "apiKey": "local-bypass",
+      "modelOverrides": {
+        "Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp": {
+          "contextWindow": 262144,
+          "maxTokens": 65536
+        }
+      }
+    }
+  }
+}

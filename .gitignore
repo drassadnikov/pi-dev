@@ -1,0 +1,6 @@
+# данные сессий и кэши — не настройки
+agent/sessions/
+agent/web-search-cache/
+agent/session-hoarder/
+agent/powerline-footer/
+agent/npm/node_modules/

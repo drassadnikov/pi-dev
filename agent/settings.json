@@ -1,0 +1,38 @@
+{
+  "defaultProvider": "local-llama",
+  "defaultModel": "ATX-Swift-1.5-Qwen3.8-27B-Uncensored-IQ4_XS-M",
+  "defaultThinkingLevel": "off",
+  "telemetry": false,
+  "offlineMode": true,
+  "hideThinkingBlock": true,
+  "lastChangelogVersion": "1.3.0",
+  "theme": "dark",
+  "terminal": {
+    "showTerminalProgress": true,
+    "clearOnShrink": true
+  },
+  "packages": [
+    "npm:pi-hashline-edit-pro",
+    "npm:pi-web-access",
+    "npm:bigpowers",
+    "npm:pi-powerline-footer",
+    "npm:@moyai/pi-session-hoarder",
+    "npm:@amaster.ai/pi-memory-mem0",
+    "npm:pi-web-ui",
+    "npm:pi-prompt-template-model",
+    "npm:@bacnh85/pi-obsidian"
+  ],
+  "images": {
+    "autoResize": true
+  },
+  "showHardwareCursor": true,
+  "editorPaddingX": 1,
+  "transport": "auto",
+  "markdown": {
+    "mermaid": "streaming"
+  },
+  "compaction": {
+    "reserveTokens": 65536
+  },
+  "doubleEscapeAction": "tree"
+}

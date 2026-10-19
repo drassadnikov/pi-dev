@@ -1,0 +1,15 @@
+{
+  "name": "pi-extensions",
+  "private": true,
+  "dependencies": {
+    "@amaster.ai/pi-memory-mem0": "^0.1.28",
+    "@bacnh85/pi-obsidian": "^0.9.0",
+    "@moyai/pi-session-hoarder": "^0.2.0",
+    "bigpowers": "^2.88.9",
+    "pi-hashline-edit-pro": "^6.4.8",
+    "pi-powerline-footer": "^0.20.2",
+    "pi-prompt-template-model": "^0.12.3",
+    "pi-web-access": "^0.42.0",
+    "pi-web-ui": "^0.109.0"
+  }
+}
