@@ -8,18 +8,25 @@
 ```
 pi-dev/
 ├── models.json                  # кастомные провайдеры (local-llama → llama.cpp на 192.168.1.117:9931)
-└── agent/                       # содержимое C:\Users\HOME-PC\.pi\agent
-    ├── APPEND_SYSTEM.md         # дописываемый системный промт (addendum)
-    ├── settings.json            # основные настройки: дефолтная модель, тема, пакеты, транспорт и т.д.
-    ├── models.json              # модели, доступные агенту
-    ├── models-store.json        # хранилище моделей (пустое {})
-    ├── auth.json                # авторизация провайдеров (пустая {})
+├── agent/                       # содержимое C:\Users\HOME-PC\.pi\agent
+│   ├── APPEND_SYSTEM.md         # дописываемый системный промт (addendum)
+│   ├── settings.json            # основные настройки: дефолтная модель, тема, пакеты, транспорт и т.д.
+│   ├── models.json              # модели, доступные агенту
+│   ├── models-store.json        # хранилище моделей (пустое {})
+│   ├── auth.json                # авторизация провайдеров (пустая {})
+│   ├── extensions/
+│   │   ├── obsidian-auto-note.ts  # авто-сохранение результата сессии в Obsidian
+│   │   └── obsidian-context.ts    # подхват контекста из Obsidian-хранилища
+│   └── npm/
+│       ├── package.json         # список установленных npm-пакетов (скиллы, инструменты)
+│       └── package-lock.json    # точные версии пакетов
+└── pi-homepc/                   # личный pi package (расширения Obsidian)
+    ├── package.json             # name: pi-homepc, keywords: [pi-package], private: true
+    ├── README.md
     ├── extensions/
-    │   ├── obsidian-auto-note.ts  # авто-сохранение результата сессии в Obsidian
-    │   └── obsidian-context.ts    # подхват контекста из Obsidian-хранилища
-    └── npm/
-        ├── package.json         # список установленных npm-пакетов (скиллы, инструменты)
-        └── package-lock.json    # точные версии пакетов
+    │   ├── obsidian-context.ts  # Obsidian-контекст перед ответом
+    │   └── obsidian-auto-note.ts# автосохранение сессий в pi-log
+    └── docs/APPEND_SYSTEM.md    # копия системного addendum (справка)
 ```
 
 ## Установленные пакеты (из `agent/npm/package.json`)
@@ -35,6 +42,29 @@ pi-dev/
 | `pi-web-ui` | веб-интерфейс |
 | `pi-prompt-template-model` | пользовательские prompt-шаблоны (slash-команды) |
 | `@bacnh85/pi-obsidian` | инструмент `obsidian` для работы с хранилищем |
+| `pi-lsp-extension` | LSP-инструменты (diagnostics, hover, rename) |
+| `pi-fff` | быстрый поиск файлов (find_files / fff_multi_grep) |
+| `pi-nvim` | мост pi ↔ Neovim |
+| `A:\PROJECTS\pi-homepc` | личный пакет: extensions Obsidian (см. раздел ниже) |
+## Личный пакет `pi-homepc`
+
+Каталог `pi-homepc/` — мой личный [pi package](https://pi.dev/packages):
+два расширения Obsidian в одном installable-юните (актуальная копия —
+`A:/PROJECTS/pi-homepc`).
+
+```bash
+pi install A:/PROJECTS/pi-homepc        # локальный путь
+# из этого репозитория:
+git clone https://github.com/drassadnikov/pi-dev
+pi install /path/to/pi-dev/pi-homepc    # локальный путь к подкаталогу
+```
+
+- `extensions/obsidian-context.ts` — анализ Obsidian-хранилища перед ответом;
+- `extensions/obsidian-auto-note.ts` — автосохранение сессий в `pi-log/`;
+- `docs/APPEND_SYSTEM.md` — копия системного addendum (справка, не ресурс).
+
+Оба расширения захардкожены под хранилище `\\192.168.1.1\backup\Obsidian\Obsidian`
+— при переносе поправить константы.
 
 ## Восстановление на другой машине
 

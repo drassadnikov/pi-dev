@@ -20,7 +20,11 @@
     "npm:@amaster.ai/pi-memory-mem0",
     "npm:pi-web-ui",
     "npm:pi-prompt-template-model",
-    "npm:@bacnh85/pi-obsidian"
+    "npm:@bacnh85/pi-obsidian",
+    "npm:pi-lsp-extension",
+    "npm:pi-fff",
+    "npm:pi-nvim",
+    "A:\\PROJECTS\\pi-homepc"
   ],
   "images": {
     "autoResize": true
@@ -33,6 +37,26 @@
   },
   "compaction": {
     "reserveTokens": 65536
+  },
+  "defaultTools": [
+    "+codemode"
+  ],
+  "pi-memory-mem0": {
+    "mode": "embedded",
+    "oss": {
+      "llm": {
+        "provider": "local-llama",
+        "config": {
+          "model": "qwen3.8-27b"
+        }
+      },
+      "embedder": {
+        "provider": "fastembed",
+        "config": {
+          "model": "fast-multilingual-e5-large"
+        }
+      }
+    }
   },
   "doubleEscapeAction": "tree"
 }

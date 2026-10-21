@@ -1,0 +1,18 @@
+{
+  "name": "pi-homepc",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Личный pi-пакет HOME-PC: Obsidian-контекст перед ответом + автосохранение сессий в Obsidian (pi-log)",
+  "license": "MIT",
+  "keywords": [
+    "pi-package"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions/*.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  }
+}
