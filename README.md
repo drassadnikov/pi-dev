@@ -1,8 +1,7 @@
 # pi-dev
 
 Снапшот всех настроек агента [pi](https://pi.dev), выставленных на локальной машине
-(HOME-PC, Windows, пользователь HOME-PC) на момент 2026-10-19.
-
+(HOME-PC, Windows, пользователь HOME-PC). Полный снапшот — в пакете `pi-homepc/config/`.
 ## Структура
 
 ```
@@ -20,13 +19,16 @@ pi-dev/
 │   └── npm/
 │       ├── package.json         # список установленных npm-пакетов (скиллы, инструменты)
 │       └── package-lock.json    # точные версии пакетов
-└── pi-homepc/                   # личный pi package (расширения Obsidian)
+└── pi-homepc/                   # личный pi package (расширения Obsidian + все настройки)
     ├── package.json             # name: pi-homepc, keywords: [pi-package], private: true
     ├── README.md
     ├── extensions/
     │   ├── obsidian-context.ts  # Obsidian-контекст перед ответом
     │   └── obsidian-auto-note.ts# автосохранение сессий в pi-log
-    └── docs/APPEND_SYSTEM.md    # копия системного addendum (справка)
+    └── config/                  # полный снапшот настроек (C:\Users\HOME-PC\.pi)
+        ├── models.json          # ~/.pi/models.json (кастомные провайдеры)
+        └── agent/               # ~/.pi/agent: settings, models, mcp, auth,
+            └── ...              # provider-keys, APPEND_SYSTEM.md, prompts/
 ```
 
 ## Установленные пакеты (из `agent/npm/package.json`)
@@ -61,7 +63,8 @@ pi install /path/to/pi-dev/pi-homepc    # локальный путь к под�
 
 - `extensions/obsidian-context.ts` — анализ Obsidian-хранилища перед ответом;
 - `extensions/obsidian-auto-note.ts` — автосохранение сессий в `pi-log/`;
-- `docs/APPEND_SYSTEM.md` — копия системного addendum (справка, не ресурс).
+- `config/` — полный снапшот настроек pi (`settings.json`, `models.json`,
+  `mcp.json`, `auth.json`, `provider-keys.json`, `APPEND_SYSTEM.md`, `prompts/`).
 
 Оба расширения захардкожены под хранилище `\\192.168.1.1\backup\Obsidian\Obsidian`
 — при переносе поправить константы.
@@ -85,6 +88,7 @@ pi install /path/to/pi-dev/pi-homepc    # локальный путь к под�
 
 ## Секреты
 
-`auth.json` и `models.json` на момент снапшота не содержат секретов
-(локальный провайдер с `apiKey: "local-bypass"`), репозиторий может быть публичным.
-При добавлении API-ключей репозиторий лучше сделать приватным.
+`auth.json` (только локальный `llama.cpp` с `apiKey: "local-bypass"`) и
+`provider-keys.json` (пустой) на момент снапшота 2026-10-23 не содержат секретов,
+репозиторий может быть публичным. При добавлении API-ключей репозиторий
+лучше сделать приватным.

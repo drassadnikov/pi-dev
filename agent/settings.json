@@ -1,11 +1,11 @@
 {
-  "defaultProvider": "local-llama",
-  "defaultModel": "ATX-Swift-1.5-Qwen3.8-27B-Uncensored-IQ4_XS-M",
+  "defaultProvider": "llama.cpp",
+  "defaultModel": "qwen3.8-27b",
   "defaultThinkingLevel": "off",
   "telemetry": false,
   "offlineMode": true,
   "hideThinkingBlock": true,
-  "lastChangelogVersion": "1.3.0",
+  "lastChangelogVersion": "1.4.0",
   "theme": "dark",
   "terminal": {
     "showTerminalProgress": true,
@@ -45,9 +45,11 @@
     "mode": "embedded",
     "oss": {
       "llm": {
-        "provider": "local-llama",
+        "provider": "vllm",
         "config": {
-          "model": "qwen3.8-27b"
+          "model": "qwen3.8-27b",
+          "baseURL": "http://192.168.1.117:9931/v1",
+          "apiKey": "local-bypass"
         }
       },
       "embedder": {
@@ -58,5 +60,6 @@
       }
     }
   },
-  "doubleEscapeAction": "tree"
+  "doubleEscapeAction": "tree",
+  "deviceId": "5b2fe2b8-c119-4c15-84bb-f86bedac2a25"
 }
