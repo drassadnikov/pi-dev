@@ -43,6 +43,7 @@
   ],
   "pi-memory-mem0": {
     "mode": "embedded",
+    "autoCapture": false,
     "oss": {
       "llm": {
         "provider": "vllm",

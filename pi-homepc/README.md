@@ -9,6 +9,7 @@
 |---|---|---|
 | Extension | `extensions/obsidian-context.ts` | Перед ответом на ЛЮБОЙ промпт агент сначала анализирует md-заметки Obsidian-хранилища (`\\192.168.1.1\backup\Obsidian\Obsidian`) инструментом `obsidian` (files / search / read) и учитывает их в ответе. |
 | Extension | `extensions/obsidian-auto-note.ts` | После каждого завершённого хода дописывает блок «prompt + result» в заметку `pi-log/session-<id>.md` в хранилище. Основная запись — прямой FS-write на шару (работает без приложения Obsidian), fallback — `obsidian` CLI. Ошибки не рвут сессию. |
+| Extension | `extensions/git-stderr-guard.ts` | Постоянный фикс `fatal: not a git repository` в TUI: патчит `child_process.execSync`/`execFileSync` так, что git-команды без явного `stdio` получают `stdio: ["pipe","pipe","ignore"]` — stderr git больше не протекает в терминал. Живёт в локальном пакете, поэтому `pi update --extensions` его не перезаписывает (в отличие от однострочного фикса в bigpowers/omp-hooks.ts). |
 | Config | `config/` | Полный снапшот настроек pi (HOME-PC): `settings.json`, `models.json`, `mcp.json`, `auth.json`, `provider-keys.json`, `models-store.json`, `APPEND_SYSTEM.md`, `extensions/pi-fff.json`, `prompts/diag-continue.md` |
 
 ## Установка
@@ -29,7 +30,7 @@ pi remove A:/PROJECTS/pi-homepc
 
 ## Настройки (`config/`)
 
-Зеркало локальной директории pi (`C:\Users\HOME-PC\.pi`), снапшот от 2026-10-23:
+Зеркало локальной директории pi (`C:\Users\HOME-PC\.pi`), снапшот от 2026-10-26:
 
 ```
 config/
