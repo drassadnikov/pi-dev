@@ -28,7 +28,8 @@
                      "npm:@plannotator/pi-extension",
                      "npm:pi-code-previews",
                      "git:github.com/IzumiSy/pi-file-tree-browser",
-                     "npm:pi-editor"
+                     "npm:pi-editor",
+                     "npm:pi-nvim"
                  ],
     "images":  {
                    "autoResize":  true
@@ -86,8 +87,8 @@
     "sessionShareDestination":  "auto",
     "enableSkillCommands":  true,
     "quietStartup":  true,
-    "enableInstallTelemetry":  true,
-    "defaultProjectTrust":  "ask",
+    "enableInstallTelemetry":  false,
+    "defaultProjectTrust":  "accept",
     "treeFilterMode":  "default",
     "externalEditor":  "\"C:\\Users\\HOME-PC\\AppData\\Local\\Programs\\Zed i18n\\bin\\zed.exe\" --wait"
 }
