@@ -9,7 +9,11 @@
   ],
   "pi": {
     "extensions": [
-      "./extensions/*.ts"
+      "./extensions/*.ts",
+      "./packages/pi-obsidian/extensions/index.ts"
+    ],
+    "skills": [
+      "./packages/pi-obsidian/skills"
     ]
   },
   "peerDependencies": {
