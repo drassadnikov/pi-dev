@@ -1,94 +1,63 @@
 # pi-dev
 
 Снапшот всех настроек агента [pi](https://pi.dev), выставленных на локальной машине
-(HOME-PC, Windows, пользователь HOME-PC). Полный снапшот — в пакете `pi-homepc/config/`.
+(HOME-PC, Windows, пользователь HOME-PC). Снапшот от **16-11-2026**: после ревизии
+и оптимизации промтов (APPEND_SYSTEM.md пересобран в структурированный вид).
+
 ## Структура
 
 ```
 pi-dev/
-├── models.json                  # кастомные провайдеры (local-llama → llama.cpp на 192.168.1.117:9931)
+├── models.json                  # кастомные провайдеры (~/.pi/models.json: llama.cpp на 192.168.1.117:9931)
 ├── agent/                       # содержимое C:\Users\HOME-PC\.pi\agent
-│   ├── APPEND_SYSTEM.md         # дописываемый системный промт (addendum)
+│   ├── APPEND_SYSTEM.md         # дописываемый системный промт (addendum), структурированный по секциям
 │   ├── settings.json            # основные настройки: дефолтная модель, тема, пакеты, транспорт и т.д.
 │   ├── models.json              # модели, доступные агенту
-│   ├── models-store.json        # хранилище моделей (пустое {})
-│   ├── auth.json                # авторизация провайдеров (пустая {})
+│   ├── models-store.json        # хранилище моделей
+│   ├── auth.json                # авторизация провайдеров
+│   ├── mcp.json                 # MCP-серверы
+│   ├── provider-keys.json       # ключи провайдеров
 │   ├── extensions/
-│   │   ├── obsidian-auto-note.ts  # авто-сохранение результата сессии в Obsidian
-│   │   └── obsidian-context.ts    # подхват контекста из Obsidian-хранилища
+│   │   ├── git-stderr-guard.ts      # (stub; активный — в pi-homepc/extensions)
+│   │   ├── obsidian-auto-note.ts    # (stub; активный — в pi-homepc/extensions)
+│   │   ├── obsidian-context.ts      # (stub; активный — в pi-homepc/extensions)
+│   │   ├── pi-i18n-ru.ts            # ЦЕНТРАЛЬНЫЙ словарь русификации: команды, инструменты, настройки
+│   │   └── pi-fff.json              # конфиг pi-fff
+│   ├── prompts/
+│   │   └── diag-continue.md         # prompt-шаблон: диагностика плагина Continue
 │   └── npm/
-│       ├── package.json         # список установленных npm-пакетов (скиллы, инструменты)
+│       ├── package.json         # список установленных npm-пакетов (расширения, скиллы)
 │       └── package-lock.json    # точные версии пакетов
-└── pi-homepc/                   # личный pi package (расширения Obsidian + все настройки)
+└── pi-homepc/                   # личный pi package (первый в packages[] в settings.json)
     ├── package.json             # name: pi-homepc, keywords: [pi-package], private: true
     ├── README.md
     ├── extensions/
+    │   ├── git-stderr-guard.ts  # патч child_process (git stderr guard), должен грузиться ПЕРВЫМ
     │   ├── obsidian-context.ts  # Obsidian-контекст перед ответом
-    │   └── obsidian-auto-note.ts# автосохранение сессий в pi-log
+    │   ├── obsidian-auto-note.ts# автосохранение сессий в pi-log
+    │   └── pi-i18n-ru.ts        # копия центрального словаря русификации
+    ├── packages/
+    │   └── pi-obsidian/         # вендор @bacnh85/pi-obsidian 0.9.0 + HOME-PC патч (guard vault)
     └── config/                  # полный снапшот настроек (C:\Users\HOME-PC\.pi)
-        ├── models.json          # ~/.pi/models.json (кастомные провайдеры)
-        └── agent/               # ~/.pi/agent: settings, models, mcp, auth,
-            └── ...              # provider-keys, APPEND_SYSTEM.md, prompts/
+        ├── models.json          # ~/.pi/models.json
+        └── agent/               # ~/.pi/agent: settings, models, mcp, auth, provider-keys, APPEND_SYSTEM.md
 ```
 
-## Установленные пакеты (из `agent/npm/package.json`)
+## Ключевые особенности
 
-| Пакет | Назначение |
-|---|---|
-| `bigpowers` | набор скиллов жизненного цикла разработки (TDD, планирование, QA и др.) |
-| `pi-hashline-edit-pro` | редактирование файлов по hashline-якорям |
-| `pi-web-access` | web_search / fetch_content / source_check |
-| `pi-powerline-footer` | powerline-подвал TUI |
-| `@moyai/pi-session-hoarder` | архивирование сессий |
-| `@amaster.ai/pi-memory-mem0` | долговременная память (mem0) |
-| `pi-web-ui` | веб-интерфейс |
-| `pi-prompt-template-model` | пользовательские prompt-шаблоны (slash-команды) |
-| `@bacnh85/pi-obsidian` | инструмент `obsidian` для работы с хранилищем |
-| `pi-lsp-extension` | LSP-инструменты (diagnostics, hover, rename) |
-| `pi-fff` | быстрый поиск файлов (find_files / fff_multi_grep) |
-| `pi-nvim` | мост pi ↔ Neovim |
-| `A:\PROJECTS\pi-homepc` | личный пакет: extensions Obsidian (см. раздел ниже) |
-## Личный пакет `pi-homepc`
+- **Модель по умолчанию**: `llama.cpp/qwen3.8-27b` (локальный llama.cpp-сервер), thinking off, offlineMode.
+- **pi-homepc — ПЕРВЫЙ** в `packages[]`: git-stderr-guard патчит `child_process.execSync` через
+  CJS-биндинг; ESM-import снапшотирует экспорты при первом `import()`, поэтому порядок важен.
+- **Русификация**: все slash-команды расширений переведены централизованно в
+  `agent/extensions/pi-i18n-ru.ts` (патч `pi.registerCommand`); hotkeys-template и
+  initEmbeddingModel (fastembed cacheDir на C:) — патчами в dist-файлах пакетов.
+- **Obsidian guard**: vault `k:\Obsidian\Obsidian` защищён от write через bash — только
+  инструмент `obsidian`; read-only bash разрешён (pi-obsidian в pi-homepc/packages).
 
-Каталог `pi-homepc/` — мой личный [pi package](https://pi.dev/packages):
-два расширения Obsidian в одном installable-юните (актуальная копия —
-`A:/PROJECTS/pi-homepc`).
+## Восстановление
 
-```bash
-pi install A:/PROJECTS/pi-homepc        # локальный путь
-# из этого репозитория:
-git clone https://github.com/drassadnikov/pi-dev
-pi install /path/to/pi-dev/pi-homepc    # локальный путь к подкаталогу
-```
-
-- `extensions/obsidian-context.ts` — анализ Obsidian-хранилища перед ответом;
-- `extensions/obsidian-auto-note.ts` — автосохранение сессий в `pi-log/`;
-- `config/` — полный снапшот настроек pi (`settings.json`, `models.json`,
-  `mcp.json`, `auth.json`, `provider-keys.json`, `APPEND_SYSTEM.md`, `prompts/`).
-
-Оба расширения захардкожены под хранилище `\\192.168.1.1\backup\Obsidian\Obsidian`
-— при переносе поправить константы.
-
-## Восстановление на другой машине
-
-1. Скопировать `agent/` в `%USERPROFILE%\.pi\agent` (Windows) или `~/.pi/agent` (Linux/macOS).
-2. Скопировать `models.json` в `%USERPROFILE%\.pi\models.json` / `~/.pi/models.json`.
-3. Установить пакеты: `pi install npm:bigpowers npm:pi-hashline-edit-pro ...`
-   (список — в `agent/settings.json`, секция `packages`) либо
-   `npm install` в папке `agent/npm`.
-4. Локальный провайдер `local-llama` указывает на `http://192.168.1.117:9931`
-   (llama.cpp) — при переносе на другую сеть заменить `baseUrl`.
-
-## Что НЕ включено
-
-- `agent/npm/node_modules` (384 МБ) — ставится по `package.json` / `package-lock.json`;
-- `agent/sessions/`, `web-search-cache/`, `session-hoarder/`, `powerline-footer/inbox.jsonl` —
-  кэши и данные сессий, не являются настройками;
-- `agent/bin/` (fd.exe, rg.exe) — бинарники, поставляемые с pi.
-
-## Секреты
-
-`auth.json` (только локальный `llama.cpp` с `apiKey: "local-bypass"`) и
-`provider-keys.json` (пустой) на момент снапшота 2026-10-23 не содержат секретов,
-репозиторий может быть публичным. При добавлении API-ключей репозиторий
-лучше сделать приватным.
+1. Скопировать `agent/` в `C:\Users\HOME-PC\.pi\agent\` (кроме sessions/кэшей).
+2. Скопировать `models.json` в `C:\Users\HOME-PC\.pi\models.json`.
+3. Репозиторий `A:\PROJECTS\pi-homepc` должен существовать (первый элемент packages[]).
+4. `pi update --extensions` для актуальных версий npm-пакетов; затем повторные патчи
+   русификации (см. APPEND_SYSTEM.md, секция «Русификация»).
