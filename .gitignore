@@ -4,3 +4,11 @@ agent/web-search-cache/
 agent/session-hoarder/
 agent/powerline-footer/
 agent/npm/node_modules/
+# данные и бинарники — не настройки
+agent/memories/
+agent/bin/
+agent/git/
+agent/pi-fff/
+agent/pi-web-access/
+agent/extensions-backup/
+**/node_modules/
