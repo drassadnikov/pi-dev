@@ -5,7 +5,7 @@
   "telemetry": false,
   "offlineMode": true,
   "hideThinkingBlock": true,
-  "lastChangelogVersion": "1.5.2",
+  "lastChangelogVersion": "1.6.0",
   "theme": "dark",
   "terminal": {
     "showTerminalProgress": true,
@@ -73,7 +73,7 @@
     "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.48.0",
     "{\"source\":\"npm:bigpowers\",\"scope\":\"user\"}": "2.96.1",
     "{\"source\":\"npm:pi-powerline-footer\",\"scope\":\"user\"}": "0.22.0",
-    "{\"source\":\"npm:pi-web-ui\",\"scope\":\"user\"}": "0.120.0",
+    "{\"source\":\"npm:pi-web-ui\",\"scope\":\"user\"}": "0.121.3",
     "{\"source\":\"npm:pi-prompt-template-model\",\"scope\":\"user\"}": "0.12.3",
     "{\"source\":\"npm:@bacnh85/pi-obsidian\",\"scope\":\"user\"}": "0.9.0",
     "{\"source\":\"npm:pi-lens\",\"scope\":\"user\"}": "4.5.1",

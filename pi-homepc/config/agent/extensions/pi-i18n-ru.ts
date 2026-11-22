@@ -1504,6 +1504,50 @@ export default async function (pi: ExtensionAPI) {
 			return origRML.apply(this, args);
 		};
 	}
+	// 3a. Text.prototype.render (pi-tui) — финальная страховка для строк боксов.
+	// ТUI-диф сравнивает строки ДО stdout-патча, поэтому выравнивание правого
+	// края рамки делаем на уровне render: если в кадре есть строка рамки
+	// (╭/╰) и она задаёт целевую ширину, все строки бокса в том же кадре
+	// приводятся к этой ширине (ANSI-aware). Покрывает welcome-бокс и любые
+	// другие боксы, чьи строки переводятся патчами выше.
+	try {
+		const tuiMod = await import("@earendil-works/pi-tui");
+		const TextCtor: any = tuiMod.Text;
+		if (TextCtor?.prototype && !TextCtor.prototype.render.__ruFramePatched) {
+			const origTextRender = TextCtor.prototype.render;
+			TextCtor.prototype.render = function patchedTextRender(this: any, ...args: any[]) {
+				const origLines = origTextRender.apply(this, args);
+				// 1.6.0: render() возвращает readonly string[] (кэш компонента) —
+				// мутировать на месте нельзя, копируем.
+				const lines: unknown[] = Array.isArray(origLines) ? [...origLines] : [];
+				try {
+					if (lines.length >= 3) {
+						const target = lines.reduce((best: number, l: unknown) => {
+							if (typeof l === "string" && (l.includes("╭") || l.includes("╰"))) {
+								const w = visWidth(l);
+								if (w > best) best = w;
+							}
+							return best;
+						}, 0);
+						if (target > 0) {
+							const canonSep = canonicalSepCol(lines.filter((l): l is string => typeof l === "string"));
+							for (let i = 0; i < lines.length; i++) {
+								if (typeof lines[i] === "string" && lines[i].includes("│")) {
+									lines[i] = normalizeBoxLine(alignSepToCol(lines[i], canonSep), target);
+								}
+							}
+						}
+					}
+				} catch {
+					// не критично
+				}
+				return lines;
+			};
+			TextCtor.prototype.render.__ruFramePatched = true;
+		}
+	} catch {
+		// pi-tui недоступен — выравнивание боксов пропускаем
+	}
 	// 3b. Welcome-бокс (pi-powerline-footer): переводим и выравниваем строки
 	// на уровне render(). ТUI-диф сравнивает строки ДО stdout-патча: перевод
 	// только на stdout давал «призрачные» хвосты — первый кадр (English, без
@@ -1555,10 +1599,13 @@ export default async function (pi: ExtensionAPI) {
 			if (!ctor?.prototype?.render || ctor.prototype.render.__ruPatched) return;
 			const origRender = ctor.prototype.render;
 			ctor.prototype.render = function patchedWelcomeRender(this: any, ...args: any[]) {
-				const lines = origRender.apply(this, args);
+				const origLines = origRender.apply(this, args);
+				// 1.6.0: render() возвращает readonly string[] (кэш компонента) —
+				// мутировать на месте нельзя, копируем.
+				const lines: unknown[] = Array.isArray(origLines) ? [...origLines] : [];
 				try {
-					if (Array.isArray(lines) && lines.length >= 3 && typeof lines[0] === "string") {
-						const target = visWidth(ru(lines[0]));
+					if (lines.length >= 3 && typeof lines[0] === "string") {
+						const target = visWidth(ru(lines[0] as string));
 						// Сначала переводим все строки, затем по ним ищем
 						// каноническую колонку внутреннего разделителя (│/┴)
 						// и ставим его на место в каждой строке — перевод
