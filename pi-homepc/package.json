@@ -5,7 +5,7 @@
     "@amaster.ai/pi-memory-mem0": "^0.1.40",
     "@bacnh85/pi-obsidian": "^0.9.1",
     "@moyai/pi-session-hoarder": "^0.2.0",
-    "@plannotator/pi-extension": "^0.29.0",
+    "@plannotator/pi-extension": "^0.29.1",
     "@schovest/pi-i18n": "^0.1.3",
     "@tmustier/pi-files-widget": "^0.2.4",
     "better-sqlite3": "^12.11.1",
@@ -22,7 +22,7 @@
     "pi-powerline-footer": "^0.22.0",
     "pi-prompt-template-model": "^0.12.3",
     "pi-web-access": "^0.48.0",
-    "pi-web-ui": "^0.120.0"
+    "pi-web-ui": "^0.121.3"
   },
   "allowScripts": {
     "@tmustier/pi-files-widget@0.2.4": true,
