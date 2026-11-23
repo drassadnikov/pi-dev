@@ -11,6 +11,10 @@
           "name": "Qwen 3.8 27B",
           "contextWindow": 262144,
           "maxTokens": 65536,
+          "promptCache": {
+            "short": 4096,
+            "long": 16384
+          },
           "reasoning": true,
           "thinkingLevelMap": {
             "off": "none",
