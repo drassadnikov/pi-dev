@@ -946,6 +946,14 @@ const RUS: Record<string, string> = {
 	"Open the Plannotator Inbox in the browser, show its address, and brief the agent on it": "Открыть Plannotator Inbox в браузере, показать адрес и проинструктировать агента",
 	"Reload Pi to load the updated Plannotator (the same as /reload)": "Перезагрузить Pi для подгрузки обновлённого Plannotator (то же, что /reload)",
 	"Start in plan mode (restricted exploration and planning)": "Старт в plan-режиме (ограниченное исследование и планирование)",
+	"Submit your Plannotator plan for user review. Call this only while Plannotator planning mode is active, after writing your plan as a markdown file anywhere inside the working directory. Pass the path to the plan file (e.g. PLAN.md or plans/auth.md). The user reviews the plan in a visual browser UI and can approve, deny with feedback, or annotate it. This tool returns as soon as the review is open; the decision arrives later as a new message, so end your turn and wait for it, and do not implement before approval. If you revise the plan while the review is open, call this again with the same path to update the open review. If denied, edit the same file in place, then call this again with the same path.": "Отправить план Plannotator на ревью пользователем. Вызывай только в planning-режиме после записи плана в markdown-файл внутри рабочей директории. Укажи путь к файлу плана (напр. PLAN.md). Пользователь ревьюит план в browser UI и может одобрить, отклонить с фидбэком или аннотировать. Инструмент возвращает ответ сразу после открытия ревью; решение придёт позже отдельным сообщением, заверши ход и жди. Не реализуй до одобрения.",
+	"Path to the markdown plan file, relative to the working directory. Must end in .md or .mdx and resolve inside cwd.": "Путь к markdown-файлу плана, относительно рабочей директории. Должен заканчиваться на .md или .mdx и резолвиться внутри cwd.",
+	// @amaster.ai/pi-memory-mem0
+	"Read and manage long-term semantic memories about the user and their projects. Memories are facts extracted from past conversations, stored in Mem0.": "Чтение и управление долгосрочными семантическими воспоминаниями о пользователе и его проектах. Воспоминания — факты, извлечённые из прошлых разговоров, хранятся в Mem0.",
+	"The memory operation to perform.": "Операция с памятью.",
+	"Search query. Required for search.": "Запрос поиска. Обязателен для search.",
+	"Memory content to store. Required for add.": "Содержимое памяти для сохранения. Обязательно для add.",
+	"Memory id to remove. Required for delete.": "ID памяти для удаления. Обязателен для delete.",
 	// pi-code-previews
 	"Show code preview renderer health and settings": "Здоровье и настройки рендерера code preview",
 	"Configure code preview settings": "Настройки code preview",
